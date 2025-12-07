@@ -31,6 +31,14 @@ traffic_light_state: Dict[traffic_lighst, traffic_lighst_enum] = {
 }
 
 
+traffic_cycle_duration: Dict[traffic_lighst_enum, float] = {
+    traffic_lighst_enum.NO_TRAFFIC: 0.0,
+    traffic_lighst_enum.LIGHT_TRAFFIC: 10.0,
+    traffic_lighst_enum.MODERATE_TRAFFIC: 20.0,
+    traffic_lighst_enum.HEAVY_TRAFFIC: 35.0,
+}
+
+
 # Lighter bands sit first so the first match determines the level.
 traffic_thresholds: Tuple[Tuple[traffic_lighst_enum, int], ...] = (
     (traffic_lighst_enum.NO_TRAFFIC, 0),
@@ -68,4 +76,10 @@ def describe_light_status(light: traffic_lighst) -> str:
     """Return the human-friendly label for the current status of a traffic light."""
 
     return traffic_status[get_light_status(light)]
+
+
+def get_cycle_duration(level: traffic_lighst_enum) -> float:
+    """Return the timer duration (seconds) associated with a traffic level."""
+
+    return traffic_cycle_duration[level]
 
